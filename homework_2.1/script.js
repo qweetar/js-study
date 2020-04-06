@@ -5,19 +5,16 @@ var myArray = [ 5, 7,
 ];
 
 
+
 function treesum(n) {
   var sum = 0;
-  var countArray = n;
-  counter(countArray);
-  function counter(n) {
-    for (var i = 0; i < n.length; i++) {
-      if (Array.isArray(n[i])) {
-        counter(n[i]);
-      } else {
-        console.log("i = " + n[i]);
-        sum+= Number(n[i]);
-        console.log("sum = " + sum);
-      }
+  for (var i = 0; i < n.length; i++) {
+    if (Array.isArray(n[i])) {
+      sum+= treesum(n[i]);
+    } else {
+      console.log("i = " + n[i]);
+      sum+= Number(n[i]);
+      console.log("sum = " + sum);
     }
   }
   return sum;
