@@ -4,8 +4,6 @@ var myArray = [ 5, 7,
   1, 8
 ];
 
-
-
 function treesum(n) {
   var sum = 0;
   for (var i = 0; i < n.length; i++) {
@@ -13,7 +11,7 @@ function treesum(n) {
       sum+= treesum(n[i]);
     } else {
       console.log("i = " + n[i]);
-      sum+= Number(n[i]);
+      sum+= n[i];
       console.log("sum = " + sum);
     }
   }
