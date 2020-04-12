@@ -8,6 +8,8 @@ function cutSpace(text) {
   var startChar = 0;
   var endChar = text.length;
 
+  var cleanText = "";
+
   if (text.length == 0) {
     console.log("Строка пустая");
     return text;
@@ -21,9 +23,9 @@ function cutSpace(text) {
     }
   }
 
-  if (startChar == text.length && startChar > 0) {
+  if (startChar == text.length) {
     console.log("Строка состоит только из пробелов");
-    return text;
+    return cleanText;
   }
 
   for (var j = text.length - 1; j >= 0; j--) {
@@ -39,7 +41,7 @@ function cutSpace(text) {
     return text;
   }
 
-  var cleanText = text.slice(startChar, endChar);
+  cleanText = text.slice(startChar, endChar);
   console.log("В строке вырезаны пробелы");
   return cleanText;
 }
