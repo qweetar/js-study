@@ -5,7 +5,6 @@ function HashStorageFunc() {
 
   this.addValue = function addVal(key, value) {
     hashObj[key] = value;
-      return true;
   }
 
   this.getValue = function getVal(key) {
@@ -13,8 +12,13 @@ function HashStorageFunc() {
   }
 
   this.deleteValue = function deleteVal(key) {
-    delete hashObj[key];
-    return true;
+    if (this.getValue(key)) {
+      delete hashObj[key];
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
   this.getKeys = function getK() {
