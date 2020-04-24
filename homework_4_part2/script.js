@@ -12,7 +12,7 @@ function HashStorageFunc() {
   }
 
   this.deleteValue = function deleteVal(key) {
-    if (this.getValue(key)) {
+    if (key in hashObj) {
       delete hashObj[key];
       return true;
     } else {
@@ -30,7 +30,46 @@ function HashStorageFunc() {
   }
 }
 
+
 var drinkStorage = new HashStorageFunc();
+
+function addDrink() {
+  var drinkName = prompt("Введите название напитка");
+  var alcohol = prompt("Напиток алкогольный? Введите 'Да' или 'Нет'");
+  var composition = prompt("Введите состав напитка через запятую: 'ингредиент_1, ингредиент_2, ..., ингредиент_n'");
+  var recipe = prompt("Введите описание рецепта");
+  var newDrink = {};
+  newDrink.алкогольный = alcohol;
+  newDrink.состав = composition.split(/,/);
+  newDrink["рецепт приготовления"] = recipe;
+
+  drinkStorage.addValue(drinkName, newDrink);
+  alert("Напиток успешно добавлен в каталог!");
+}
+
+function delDrink() {
+  var drinkName = prompt("Введите название напитка");
+  if (drinkStorage.deleteValue(drinkName)) {
+    alert("Наиток удален из каталога");
+  } else {
+    alert("Такого напитка нет в каталоге");
+  }
+}
+
+function infoDrink() {
+  var drinkName = prompt("Введите название напитка");
+  var drinkInfo = drinkStorage.getValue(drinkName);
+  alert("Напиток " + drinkName +
+        "\nАлкогольный: " + drinkInfo.алкогольный +
+        "\nСостав: " + drinkInfo.состав +
+        "\nРецепт приготовления: \n" +
+         drinkInfo["рецепт приготовления"]);
+}
+
+function listDrink() {
+  var drinkList = drinkStorage.getKeys();
+  alert("В каталоге имеются следующие напитки: " + drinkList);
+}
 
 var margarita = {
   алкогольный: "да",
