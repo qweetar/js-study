@@ -59,11 +59,15 @@ function delDrink() {
 function infoDrink() {
   var drinkName = prompt("Введите название напитка");
   var drinkInfo = drinkStorage.getValue(drinkName);
+  if (drinkInfo === undefined) {
+    alert("Нет такого напитка")
+  } else {
   alert("Напиток " + drinkName +
         "\nАлкогольный: " + drinkInfo.алкогольный +
         "\nСостав: " + drinkInfo.состав +
         "\nРецепт приготовления: \n" +
          drinkInfo["рецепт приготовления"]);
+  }
 }
 
 function listDrink() {
