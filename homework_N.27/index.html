@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Document</title>
+      <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <form id="myForm" action="https://fe.it-academy.by/TestForm.php" novalidate>
+      <div>
+        <label>Разработчик:</label><input type="text" class="longtext" id="dev"></input><span id="devError"></span><br>
+        <label>Название сайта:</label><input type="text" class="longtext" id="siteName"></input><span class="error" id="siteNameError"></span><br>
+        <label>URL сайта:</label><input type="text" class=""="shorttext" id="siteUrl"></input><span class="error" id="siteUrlError"></span><br>
+        <label>Дата запуска сайта:</label><input type="date" class="date" id="startDate"></input><span class="error" id="startDateError"></span><br>
+        <label>Посетителей в сутки:</label><input type="number" class="number" id="users"></input><span class="error" id="usersError"></span><br>
+        <label>E-mail для связи:</label><input type="text" class="shorttext" id="mail"><span id="mailError"></span></input><br>
+        <label>Рубрика каталога:</label>
+        <select class="combo" id="choise">
+          <option value="0"></option>
+          <option value="1">здоровье</option>
+          <option value="2">домашний уют</option>
+          <option value="3">бытовая техника</option>
+        </select><span class="error" id="choiseError"></span><br>
+        <label>Размещение:</label>
+        <input class="radio" type="radio" name="payment" value="1" id="radio1">бесплатное</input>
+        <input class="radio" type="radio" name="payment" value="2" id="radio2">платное</input>
+        <input class="radio" type="radio" name="payment" value="3" id="radio3">VIP</input><span class="error" id="radioError"></span><br>
+        <label>Разрешить отзывы:</label>
+        <input class="check" type="checkbox" name="votes" id="check"></input><span class="error" id="checkError"></span><br>
+        <label>Описание сайта:</label><span class="error" id="descriptionError"></span><br>
+        <textarea class="memo" name="description" id="description"></textarea><br>
+        <button >Опубликовать</button>
+      </div>
+    </form>
+
+
+
+    <script src="script.js"></script>
+  </body>
+</html>
