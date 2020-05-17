@@ -1,13 +1,12 @@
-
-var elemArray = new Array();
-
 function findElements() {
-  for (let elem of document.getElementsByTagName("img")) {
-    elemArray.push(elem);
-    let coords = elem.getBoundingClientRect();
+  for (let elem of document.getElementsByClassName("draggable")) {
 
+
+    elem.style.width = "100px";
+    elem.style.height = "100px";
     elem.style.position = "sticky";
     elem.style.zIndex = 1000;
+    let coords = elem.getBoundingClientRect();
     elem.style.left = coords.left + "px";
     elem.style.top = coords.top + "px";
 
@@ -25,6 +24,8 @@ function dragItem(item) {
     item.classList.add("grabed");
 
     item.style.position = "absolute";
+    item.style.width = "110px";
+    item.style.height = "110px";
     document.body.append(item);
 
     moveAt(event.pageX, event.pageY);
@@ -44,6 +45,8 @@ function dragItem(item) {
     item.onmouseup = function() {
       document.removeEventListener("mousemove", onMouseMove);
       item.classList.remove("grabed");
+      item.style.width = "100px";
+      item.style.height = "100px";
       item.onmouseup = null;
     };
   };
