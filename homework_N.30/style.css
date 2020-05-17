@@ -1,0 +1,11 @@
+.draggable {
+  cursor: grab;
+  height: 100px;
+  width: 100px;
+}
+
+.grabed {
+  cursor: grabbing;
+  height: 110px;
+  width: 110px;
+}
