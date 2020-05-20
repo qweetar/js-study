@@ -1,16 +1,22 @@
 function findElements() {
-  for (let elem of document.getElementsByClassName("draggable")) {
+  for (let elem of document.getElementsByTagName("img")) {
+    elem.style.width = "auto";
+    elem.style.height = "100%";
 
+    let newDiv = document.createElement("div");
+    newDiv.classList.add("draggable");
+    newDiv.style.position = "sticky";
+    newDiv.style.float = "left";
+    newDiv.style.width = "100px";
+    newDiv.style.height = "100px";
+    elem.parentNode.insertBefore(newDiv, elem);
+    newDiv.appendChild(elem);
+    newDiv.style.zIndex = 1000;
+    let coords = newDiv.getBoundingClientRect();
+    newDiv.style.left = coords.left + "px";
+    newDiv.style.top = coords.top + "px";
 
-    elem.style.width = "100px";
-    elem.style.height = "100px";
-    elem.style.position = "sticky";
-    elem.style.zIndex = 1000;
-    let coords = elem.getBoundingClientRect();
-    elem.style.left = coords.left + "px";
-    elem.style.top = coords.top + "px";
-
-    dragItem(elem);
+    dragItem(newDiv);
   }
 }
 
