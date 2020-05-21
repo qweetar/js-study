@@ -5,8 +5,3 @@
 .grabed {
   cursor: grabbing;
 }
-
-#myDiv {
-  position: absolute;
-  width: 100%;
-}

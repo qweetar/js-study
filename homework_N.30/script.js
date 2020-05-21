@@ -1,26 +1,20 @@
-function findElements() {
-  for (let elem of document.getElementsByTagName("img")) {
-    elem.style.width = "auto";
-    elem.style.height = "100%";
-
-    let newDiv = document.createElement("div");
-    newDiv.classList.add("draggable");
-    newDiv.style.position = "sticky";
-    newDiv.style.float = "left";
-    newDiv.style.width = "100px";
-    newDiv.style.height = "100px";
-    elem.parentNode.insertBefore(newDiv, elem);
-    newDiv.appendChild(elem);
-    newDiv.style.zIndex = 1000;
-    let coords = newDiv.getBoundingClientRect();
-    newDiv.style.left = coords.left + "px";
-    newDiv.style.top = coords.top + "px";
-
-    dragItem(newDiv);
-  }
+window.onload = function() {
+  findElements();
 }
 
-findElements();
+function findElements() {
+  var elemArray = document.getElementsByClassName("draggable");
+  for (let i = elemArray.length - 1; i >= 0; i--) {
+
+    elemArray[i].style.position = "absolute";
+    elemArray[i].style.zIndex = 1000;
+    let coords = elemArray[i].getBoundingClientRect();
+    elemArray[i].style.left = coords.left + "px";
+    elemArray[i].style.top = coords.top + "px";
+
+    dragItem(elemArray[i]);
+  }
+}
 
 function dragItem(item) {
   item.onmousedown = function(event) {
@@ -30,8 +24,7 @@ function dragItem(item) {
     item.classList.add("grabed");
 
     item.style.position = "absolute";
-    item.style.width = "110px";
-    item.style.height = "110px";
+    item.style.boxShadow = "0 0 5px 2px";
     document.body.append(item);
 
     moveAt(event.pageX, event.pageY);
@@ -51,8 +44,7 @@ function dragItem(item) {
     item.onmouseup = function() {
       document.removeEventListener("mousemove", onMouseMove);
       item.classList.remove("grabed");
-      item.style.width = "100px";
-      item.style.height = "100px";
+      item.style.boxShadow = "0 0 0 0";
       item.onmouseup = null;
     };
   };
