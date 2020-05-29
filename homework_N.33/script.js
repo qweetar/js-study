@@ -63,12 +63,19 @@ function moveSecondHand(currentSecond) {
 
 function updateTime() {
   var currTime = new Date();
-  var time = currTime.getHours() + ":" + currTime.getMinutes() + ":" + currTime.getSeconds();
+  var time = str0l(currTime.getHours(), 2) + ":" + str0l(currTime.getMinutes(), 2) + ":" + str0l(currTime.getSeconds(), 2);
   document.getElementById("watch").innerHTML = time;
   moveHourHand(currTime.getHours(), currTime.getMinutes());
   moveMinuteHand(currTime.getMinutes(), currTime.getSeconds());
   moveSecondHand(currTime.getSeconds());
 
+}
+
+function str0l(val,len) {
+        var strVal=val.toString();
+        while ( strVal.length < len )
+            strVal='0'+strVal;
+        return strVal;
 }
 
 function createDigitWatch(mainCircle, clockSize) {
