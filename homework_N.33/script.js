@@ -3,25 +3,29 @@
 var size = prompt("Введите размер часов от 200 до 1000");
 createClock(size);
 
+var mainCircle;
+
 function createClock(clockSize) {
+
   var radiusCounter = 0;
-  var mainCircle = createMainCircle(clockSize);
+  mainCircle = createMainCircle(clockSize);
   createNumCircles(mainCircle, radiusCounter, clockSize);
   createClockHands(mainCircle, clockSize);
-
   createDigitWatch(mainCircle, clockSize);
-
   setInterval(updateTime, 1000);
-}
-
-function moveSecondHand(currentSecond) {
-  var secondHand = document.getElementById("sHand");
-  var secondAngle = currentSecond * 6;
-  secondHand.style.transform = "rotate(" + secondAngle + "deg)";
 }
 
 function moveHourHand(currentHour, currentMinute) {
   var hourHand = document.getElementById("hHand");
+  hourHand.style.height = size / 2.9 + "px";
+  hourHand.style.width = size / 30 + "px";
+  hourHand.style.backgroundColor = "black";
+  hourHand.style.borderRadius = "10px";
+  hourHand.style.position = "absolute";
+  hourHand.style.transformOrigin = "50% 90%";
+  clockHandCenter(mainCircle, hourHand);
+
+
   var hourAngle = currentHour * 30;
   hourAngle += currentMinute * 0.5;
   hourHand.style.transform = "rotate(" + hourAngle + "deg)";
@@ -29,18 +33,41 @@ function moveHourHand(currentHour, currentMinute) {
 
 function moveMinuteHand(currentMinute, currentSecond) {
   var minuteHand = document.getElementById("mHand");
+  minuteHand.style.height = size / 2.5 + "px";
+  minuteHand.style.width = size / 50 + "px";
+  minuteHand.style.backgroundColor = "black";
+  minuteHand.style.borderRadius = "10px";
+  minuteHand.style.position = "absolute";
+  minuteHand.style.transformOrigin = "50% 90%";
+  clockHandCenter(mainCircle, minuteHand);
+
+
   var minuteAngle = currentMinute * 6;
   minuteAngle += currentSecond * 0.05;
   minuteHand.style.transform = "rotate(" + minuteAngle + "deg)";
+}
+
+function moveSecondHand(currentSecond) {
+  var secondHand = document.getElementById("sHand");
+  secondHand.style.height = size / 2.1 + "px";
+  secondHand.style.width = size / 100 + "px";
+  secondHand.style.backgroundColor = "red";
+  secondHand.style.position = "absolute";
+  secondHand.style.transformOrigin = "50% 90%";
+  clockHandCenter(mainCircle, secondHand);
+
+
+  var secondAngle = currentSecond * 6;
+  secondHand.style.transform = "rotate(" + secondAngle + "deg)";
 }
 
 function updateTime() {
   var currTime = new Date();
   var time = currTime.getHours() + ":" + currTime.getMinutes() + ":" + currTime.getSeconds();
   document.getElementById("watch").innerHTML = time;
-  moveSecondHand(currTime.getSeconds());
   moveHourHand(currTime.getHours(), currTime.getMinutes());
   moveMinuteHand(currTime.getMinutes(), currTime.getSeconds());
+  moveSecondHand(currTime.getSeconds());
 
 }
 
@@ -116,42 +143,20 @@ function createClockHands(mainCircle, clockSize) {
   var hourHand = document.createElement("div");
   document.body.append(hourHand);
   hourHand.id = "hHand";
-  hourHand.style.height = clockSize / 3 + "px";
-  hourHand.style.width = clockSize / 30 + "px";
-  hourHand.style.backgroundColor = "black";
-  hourHand.style.border = "solid 2px grey";
-  hourHand.style.borderRadius = "10px";
-  hourHand.style.position = "absolute";
-  hourHand.style.transformOrigin = "0 100%";
-  clockHandMovement(mainCircle, hourHand);
 
   var minuteHand = document.createElement("div");
   document.body.append(minuteHand);
   minuteHand.id = "mHand";
-  minuteHand.style.height = clockSize / 2.5 + "px";
-  minuteHand.style.width = clockSize / 50 + "px";
-  minuteHand.style.backgroundColor = "black";
-  minuteHand.style.border = "solid 2px grey";
-  minuteHand.style.borderRadius = "10px";
-  minuteHand.style.position = "absolute";
-  minuteHand.style.transformOrigin = "0 100%";
-  clockHandMovement(mainCircle, minuteHand);
 
   var secondHand = document.createElement("div");
   document.body.append(secondHand);
   secondHand.id = "sHand";
-  secondHand.style.height = clockSize / 2.1 + "px";
-  secondHand.style.width = clockSize / 100 + "px";
-  secondHand.style.backgroundColor = "red";
-  secondHand.style.position = "absolute";
-  secondHand.style.transformOrigin = "0 100%";
-  clockHandMovement(mainCircle, secondHand);
 }
 
-function clockHandMovement(clock, hand) {
+function clockHandCenter(clock, hand) {
 
   var clockCenterX = clock.offsetLeft + clock.offsetWidth / 2;
   var clockCenterY = clock.offsetTop + clock.offsetHeight / 2;
-  hand.style.left = clockCenterX + hand.offsetWidth/2 + "px";
-  hand.style.top = clockCenterY - hand.offsetHeight + "px";
+  hand.style.left = clockCenterX - hand.offsetWidth / 2 + "px";
+  hand.style.top = clockCenterY - hand.offsetHeight * 0.9 + "px";
 }
