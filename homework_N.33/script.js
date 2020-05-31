@@ -6,16 +6,13 @@ createClock(size);
 var mainCircle;
 
 function createClock(clockSize) {
-  setTimeout(startClock, 1000);
-  setInterval(updateTime, 1000);
-
-  function startClock() {
   var radiusCounter = 0;
   mainCircle = createMainCircle(clockSize);
   createNumCircles(mainCircle, radiusCounter, clockSize)
   createClockHands(mainCircle, clockSize);
   createDigitWatch(mainCircle, clockSize);
-  }
+  updateTime();
+  setInterval(updateTime, 1000);
 }
 
 function moveHourHand(currentHour, currentMinute) {
