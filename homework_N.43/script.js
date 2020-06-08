@@ -2,11 +2,16 @@
 
 var windowWidth = 800;
 var windowHeight = 600;
-var racketSpeed = 15;
+var racketSpeed = 10;
 var ballSpeedX = 4;
 var ballSpeedY = 2;
 var scoreLeft = 0;
 var scoreRight = 0;
+var leftRacketSpeedY = 0;
+var leftRacketY = windowHeight / 3;
+var rightRacketSpeedY = 0;
+var rightRacketY = windowHeight / 3;
+
 
 var game = createTenisGame();
 createStartButton(game);
@@ -37,37 +42,69 @@ function start() {
   } else {
     tennisBall = createTennisBall(game);
   }
-  RAF(ballMovement);
+  RAF(proxyRAF);
 }
 
+function proxyRAF() {
+  ballMovement();
+  moveLeftRacket();
+  moveRightRacket();
+}
 
+document.addEventListener("keyup", function (event) {
+  if (event.key == "Shift") {
+    leftRacketSpeedY = 0;
+  }
+  if (event.key == "Control") {
+    leftRacketSpeedY = 0;
+  }
+  if (event.key == "ArrowUp") {
+    rightRacketSpeedY = 0;
+  }
+  if (event.key == "ArrowDown") {
+    rightRacketSpeedY = 0;
+  }
+});
 document.addEventListener("keydown", function (event) {
   var racket = document.getElementById("leftRacket");
   if (event.key == "Shift") {
-  moveRacketUp(racket);
+    leftRacketSpeedY = -racketSpeed;
   }
-});
 
-document.addEventListener("keydown", function (event) {
-  var racket = document.getElementById("leftRacket");
   if (event.key == "Control") {
-  moveRacketDown(racket);
+    leftRacketSpeedY = racketSpeed;
   }
-});
-
-document.addEventListener("keydown", function (event) {
-  var racket = document.getElementById("rightRacket");
   if (event.key == "ArrowUp") {
-    moveRacketUp(racket);
+    rightRacketSpeedY = -racketSpeed;
+  }
+  if (event.key == "ArrowDown") {
+    rightRacketSpeedY = racketSpeed;
   }
 });
 
-document.addEventListener("keydown", function (event) {
-  var racket = document.getElementById("rightRacket");
-  if (event.key == "ArrowDown") {
-  moveRacketDown(racket);
+function moveLeftRacket() {
+  var field = document.getElementById("tField");
+  var racket = document.getElementById("leftRacket");
+  leftRacketY += leftRacketSpeedY;
+  racket.style.top = leftRacketY + "px";
+  if (leftRacketY < 0) {
+    racket.style.top = 0 + "px";
+  } else if (leftRacketY > field.offsetHeight - racket.offsetHeight) {
+    racket.style.top = field.offsetHeight - racket.offsetHeight + "px";
   }
-});
+}
+
+function moveRightRacket() {
+  var field = document.getElementById("tField");
+  var racket = document.getElementById("rightRacket");
+  rightRacketY += rightRacketSpeedY;
+  racket.style.top = rightRacketY + "px";
+  if (rightRacketY < 0) {
+    racket.style.top = 0 + "px";
+  } else if (rightRacketY > field.offsetHeight - racket.offsetHeight) {
+    racket.style.top = field.offsetHeight - racket.offsetHeight + "px";
+  }
+}
 
 function createTenisGame() {
   var gameWindow = document.createElement("div");
@@ -122,7 +159,7 @@ function ballMovement() {
     ballPosY = 0;
   }
   updateBallPos(ballPosX, ballPosY);
-  return RAF(ballMovement);
+  return RAF(proxyRAF);
 }
 
 function updateBallPos(ballPosX, ballPosY) {
@@ -207,7 +244,7 @@ function createLeftRacket() {
   racket.style.backgroundColor = "green";
   racket.style.width = windowWidth * 0.02 + "px";
   racket.style.height = windowHeight * 0.2 + "px";
-  racket.style.top = tennisField.offsetTop / 2 + "px";
+  racket.style.top = leftRacketY + "px";
 }
 
 function createRightRacket() {
@@ -219,28 +256,6 @@ function createRightRacket() {
   racket.style.backgroundColor = "blue";
   racket.style.width = windowWidth * 0.02 + "px";
   racket.style.height = windowHeight * 0.2 + "px";
-  racket.style.top = tennisField.offsetHeight / 2 + "px";
+  racket.style.top = rightRacketY + "px";
   racket.style.left = tennisField.offsetWidth - tennisField.offsetLeft / 2 - racket.offsetWidth + "px";
-}
-
-function moveRacketUp(racket) {
-  var field = document.getElementById("tField");
-  var movement = racket.offsetTop;
-  if (movement > racketSpeed-1) {
-    movement -= racketSpeed;
-  } else {
-    movement = 0;
-  }
-  racket.style.top = movement + "px";
-}
-
-function moveRacketDown(racket) {
-  var field = document.getElementById("tField");
-  var movement = racket.offsetTop;
-  if (movement < field.offsetHeight - racket.offsetHeight - racketSpeed-1) {
-    movement += racketSpeed;
-  } else {
-    movement = field.offsetHeight - racket.offsetHeight;
-  }
-  racket.style.top = movement + "px";
 }
