@@ -110,7 +110,7 @@ function createTennisField() {
   tennisField.strokeStyle = "red";
   tennisField.lineWidth = "2";
   tennisField.beginPath();
-  tennisField.rect(0, tennisFieldTop, tennisFieldWidth, tennisFieldBottom);
+  tennisField.rect(1, tennisFieldTop, tennisFieldWidth - 1, tennisFieldBottom - tennisFieldTop - 1);
   tennisField.fill();
   tennisField.stroke();
 }
