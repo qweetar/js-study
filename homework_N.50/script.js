@@ -223,6 +223,7 @@ function ballMovement() {
   if (ballRight > tennisFieldRight) {
     ballPosX = tennisFieldWidth - ballRadius;
     ballSpeedX = - ballSpeedX;
+    createTennisBall(ballPosX, ballPosY);
     scoreLeft += 1;
     console.log(22);
     ballHit = true;
@@ -238,6 +239,7 @@ function ballMovement() {
   if (ballLeft < tennisFieldLeft) {
     ballSpeedX = - ballSpeedX;
     ballPosX = tennisFieldLeft + ballRadius;
+    createTennisBall(ballPosX, ballPosY);
     scoreRight += 1;
     console.log(44);
     ballHit = true;
