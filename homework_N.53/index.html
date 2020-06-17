@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>Кнопки работы с напитками</h1>
+      <input type=button value='Добавить напиток' onclick='addDrink()'>
+      <input type=button value='Информация о напитке' onclick='infoDrink()'>
+      <input type=button value='Удалить напиток' onclick='delDrink()'>
+      <input type=button value='Список напитков' onclick='listDrink()'>
+      <div>
+        <h3>Кнопки тестирования напитки</h3>
+        <input type=button value="locStorage.removeItem()" onclick="drinkAutoRemove()">
+        <input type=button value="localStorage.setItem()" onclick="drinkAutoFill()">
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div>
+      <h1>Кнопки работы с едой</h1>
+      <input type=button value='Добавить блюдо' onclick='addFood()'>
+      <input type=button value='Информация о блюде' onclick='infoFood()'>
+      <input type=button value='Удалить блюдо' onclick='delFood()'>
+      <input type=button value='Список блюд' onclick='listFood()'>
+      <div>
+        <h3>Кнопки тестирования еда</h3>
+        <input type=button value="locStorage.removeItem()" onclick="foodAutoRemove()">
+        <input type=button value="localStorage.setItem()" onclick="foodAutoFill()">
+      </div>
+    </div>
+
+<script src="script.js"></script>
+    <script src="locStorage.js"></script>
+  </body>
+</html>
