@@ -1,57 +1,45 @@
 "user strict"
 
-// import LocStorage from './locStorage.js'; 
+class HashStorageFunc {
+  constructor(name) {
+    this.name = name;
+    var lsObj = this.ls.getItem(name);
+    this.hashObj = JSON.parse(lsObj);
+    if (this.hashObj === null) {
+      this.hashObj = {}
+    }
+  }
 
-class LocStorage {
   ls = window.localStorage;
 
   addValue(key, value) {
-    var jsonValue = JSON.stringify(value);
-    this.ls.setItem(key, jsonValue);
+    var hashObj = this.hashObj;
+    hashObj[key] = value;
+    hashObj = JSON.stringify(hashObj);
+    this.ls.setItem(this.name, hashObj);
   }
 
   getValue(key) {
-    var value = this.ls.getItem(key);
-    var jsonValue = JSON.parse(value);
-    return jsonValue;
-  }
-
-  deleteAll(key) {
-    var value = this.ls.removeItem(key);
-  }
-}
-
-var locStorage = new LocStorage();
-
-class HashStorageFunc {
-  hashObj = {}
-
-  addValue(lskey, key, value) {
     var hashObj = this.hashObj;
-    hashObj[key] = value;
-    locStorage.addValue(lskey, hashObj);
-  }
-
-  getValue(lskey, key) {
-    var hashObj = this.hashObj;
-    hashObj = locStorage.getValue(lskey);
-    console.log(hashObj)
+    hashObj = this.ls.getItem(this.name);
+    hashObj = JSON.parse(hashObj);
     return hashObj[key];
   }
 
-  deleteValue(lskey, key) {
-    var hashObj = locStorage.getValue(lskey);
+  deleteValue(key) {
+    var hashObj = this.hashObj;
     if (key in hashObj) {
       delete hashObj[key];
-      locStorage.addValue(lskey, hashObj);
+      var jsonValue = JSON.stringify(hashObj);
+      this.ls.setItem(this.name, jsonValue);
       return true;
     } else {
       return false;
     }
   }
 
-  getKeys(lskey) {
-    var hashObj = locStorage.getValue(lskey);
+  getKeys() {
+    var hashObj = this.hashObj;
     var tempArr = [];
     for (let key in hashObj) {
       tempArr.push(key);
@@ -59,14 +47,15 @@ class HashStorageFunc {
     return tempArr;
   }
 
-  deleteAll(lskey) {
-    locStorage.deleteAll(lskey);
+  deleteAll() {
+    this.ls.removeItem(this.name);
+    this.hashObj = {}
   }
 }
 
 
 
-var foodStorage = new HashStorageFunc();
+var foodStorage = new HashStorageFunc("food");
 
 function addFood() {
   var foodName = prompt("Введите название блюда");
@@ -76,13 +65,13 @@ function addFood() {
   newFood.состав = composition.split(/,/);
   newDrink["рецепт преготовления"] = recipe;
 
-  foodStorage.addValue("food", foodName, newFood);
+  foodStorage.addValue(foodName, newFood);
   alert("Блюдо успешно добавлено в каталог!");
 }
 
 function delFood() {
   var foodName = prompt("Введите название напитка");
-  if (foodStorage.deleteValue("food", foodName)) {
+  if (foodStorage.deleteValue(foodName)) {
     alert("Блюдо удалено из каталога");
   } else {
     alert("Такого напитка нет в каталоге");
@@ -91,7 +80,7 @@ function delFood() {
 
 function infoFood() {
   var foodName = prompt("Введите название блюда");
-  var foodInfo = foodStorage.getValue("food", foodName);
+  var foodInfo = foodStorage.getValue(foodName);
   if (foodInfo === undefined) {
     alert("Нет такого блюда");
   } else {
@@ -103,8 +92,8 @@ function infoFood() {
 }
 
 function listFood() {
-  var foodList = foodStorage.getKeys("food");
-  if (foodList === undefined) {
+  var foodList = foodStorage.getKeys();
+  if (foodList.length == 0) {
     alert("Каталог пуст");
   } else {
     alert("В каталоге имеются следующие блюда: " + foodList);
@@ -122,15 +111,15 @@ function foodAutoFill() {
     "рецепт приготовления": "В ломтиках хлеба вырезать мякоть, оставить только корку по 1 см от края. Разогреть масло на сковороде. Выложить хлеб на сковороду. В каждую рамку разбить одно яйцо. Соль, перец по вкусу. Жарить, не накрывая крышкой ( для глазуньи) или с крышкой."
   };
 
-  foodStorage.addValue("food", "Хот-Дог", hotDog);
-  foodStorage.addValue("food", "Сэндвич", sandvich);
+  foodStorage.addValue("Хот-Дог", hotDog);
+  foodStorage.addValue("Сэндвич", sandvich);
 }
 
 function foodAutoRemove() {
-  foodStorage.deleteAll("food");
+  foodStorage.deleteAll();
 }
 
-var drinkStorage = new HashStorageFunc();
+var drinkStorage = new HashStorageFunc("drinks");
 
 function addDrink() {
   var drinkName = prompt("Введите название напитка");
@@ -142,13 +131,13 @@ function addDrink() {
   newDrink.состав = composition.split(/,/);
   newDrink["рецепт приготовления"] = recipe;
 
-  drinkStorage.addValue("drink", drinkName, newDrink);
+  drinkStorage.addValue(drinkName, newDrink);
   alert("Напиток успешно добавлен в каталог!");
 }
 
 function delDrink() {
   var drinkName = prompt("Введите название напитка");
-  if (drinkStorage.deleteValue("drink", drinkName)) {
+  if (drinkStorage.deleteValue(drinkName)) {
     alert("Напиток удален из каталога");
   } else {
     alert("Такого напитка нет в каталоге");
@@ -157,7 +146,7 @@ function delDrink() {
 
 function infoDrink() {
   var drinkName = prompt("Введите название напитка");
-  var drinkInfo = drinkStorage.getValue("drink", drinkName);
+  var drinkInfo = drinkStorage.getValue(drinkName);
   if (drinkInfo === undefined) {
     alert("Нет такого напитка")
   } else {
@@ -170,8 +159,8 @@ function infoDrink() {
 }
 
 function listDrink() {
-  var drinkList = drinkStorage.getKeys("drink");
-  if (drinkList === undefined) {
+  var drinkList = drinkStorage.getKeys();
+  if (drinkList.length == 0) {
     alert("Каталог пуст");
   } else {
     alert("В каталоге имеются следующие напитки: " + drinkList);
@@ -198,11 +187,11 @@ function drinkAutoFill() {
     "рецепт приготовления": "Подготавливаем все ингредиенты для приготовления. Мяту и лимон хорошо вымываем. В посуде разминаем мяту вместе с сахаром. После добавляем лимонный сок. Если делает алкогольный коктейль вливаем ром (если безалкогольный, то ром просто не нужен). Получившую массу распределяем по бокалам. Нарезаем лимон (четвертинками, половинками и кружочками) и добавляем его в бокал. Кроме этого кладём листочки мяты. Досыпаем в бокалы лёд. Вливаем до вверху бокала содовую. Украшаем веточкой мяты и долькой лимона. Вставляем трубочку."
   };
 
-  drinkStorage.addValue("drink", "Маргарита", margarita);
-  drinkStorage.addValue("drink", "Дайкири", daiquiri);
-  drinkStorage.addValue("drink", "Мохито", mojito);
+  drinkStorage.addValue("Маргарита", margarita);
+  drinkStorage.addValue("Дайкири", daiquiri);
+  drinkStorage.addValue("Мохито", mojito);
 }
 
 function drinkAutoRemove() {
-  drinkStorage.deleteAll("drink");
+  drinkStorage.deleteAll();
 }
