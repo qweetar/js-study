@@ -8,7 +8,7 @@ function addFood() {
   var recipe = prompt("Введите описание рецепта");
   var newFood = {};
   newFood.состав = composition.split(/,/);
-  newDrink["рецепт преготовления"] = recipe;
+  newFood["рецепт преготовления"] = recipe;
 
   foodStorage.addValue(foodName, newFood);
   alert("Блюдо успешно добавлено в каталог!");
