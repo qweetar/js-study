@@ -1,0 +1,41 @@
+#r1-c1 {
+  float: left;
+  width: 30%;
+}
+
+#r1-c2{
+  float: left;
+  width: 30%;
+}
+
+#r1-c3{
+  float: left;
+  width: 30%;
+}
+
+#r2-c1 {
+  float: left;
+  width: 30%;
+}
+
+#r2-c2{
+  float: left;
+  width: 30%;
+}
+
+#r2-c3{
+  float: left;
+  width: 30%;
+}
+
+.div2 {
+  height: 600px;
+  position: relative;
+  top: 50px;
+}
+
+.div2 {
+  clear: both;
+  height: 600px;
+  position: relative;
+}
