@@ -1,48 +1,28 @@
+// controller
+"user strict"
 
-function r1c1Start() {
-  runClockR1C1(true);
-}
+class ClockControllerButtons {
+  constructor(divId, model) {
+    this.divId = divId
+    this.myModel = model;
+    this.run();
+  }
 
-function r1c1Stop() {
-  runClockR1C1(false);
-}
+  run() {
+    var myDiv = document.getElementById(this.divId);
+    var r1c1Start = myDiv.querySelector(".start");
+    r1c1Start.addEventListener("click", this.start);
+    var r1c1Stop = myDiv.querySelector(".stop");
+    r1c1Stop.addEventListener("click", this.stop);
+  }
 
-function r1c2Start() {
-  runClockR1C2(true);
-}
+  funcStart() {
+    this.myModel.runClock(true);
+  }
+  start = this.funcStart.bind(this);
 
-function r1c2Stop() {
-  runClockR1C2(false);
-}
-
-function r1c3Start() {
-  runClockR1C3(true);
-}
-
-function r1c3Stop() {
-  runClockR1C3(false);
-}
-
-function r2c1Start() {
-  runClockR2C1(true);
-}
-
-function r2c1Stop() {
-  runClockR2C1(false);
-}
-
-function r2c2Start() {
-  runClockR2C2(true);
-}
-
-function r2c2Stop() {
-  runClockR2C2(false);
-}
-
-function r2c3Start() {
-  runClockR2C3(true);
-}
-
-function r2c3Stop() {
-  runClockR2C3(false);
+  funcStop() {
+    this.myModel.runClock(false);
+  }
+  stop = this.funcStop.bind(this);
 }

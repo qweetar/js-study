@@ -1,11 +1,12 @@
 "user strict"
 
 class ClockViewDOM {
-  constructor(name, xId) {
-    this.name = name;
+  constructor(myDiv, xId) {
+    this.myDiv = myDiv;
     this.xId = xId;
-    this.size = name.offsetWidth * 0.95;
+    this.size = myDiv.offsetWidth * 0.95;
     this.mainCircle = this.createClock(this.size);
+    this.updateTime(new Date());
   }
 
   createClock(clockSize) {
@@ -63,12 +64,11 @@ class ClockViewDOM {
     secondHand.style.transform = "rotate(" + secondAngle + "deg)";
   }
 
-  updateTime(gmt) {
-    var currTime = new Date();
-    var hours = currTime.getHours() + gmt;
-    var time = str0l(hours, 2) + ":" + str0l(currTime.getMinutes(), 2) + ":" + str0l(currTime.getSeconds(), 2);
+  updateTime(currTime) {
+    currTime = new Date(currTime);
+    var time = str0l(currTime.getHours(), 2) + ":" + str0l(currTime.getMinutes(), 2) + ":" + str0l(currTime.getSeconds(), 2);
     document.getElementById("watch" + this.xId).innerHTML = time;
-    this.moveHourHand(hours, currTime.getMinutes());
+    this.moveHourHand(currTime.getHours(), currTime.getMinutes());
     this.moveMinuteHand(currTime.getMinutes(), currTime.getSeconds());
     this.moveSecondHand(currTime.getSeconds());
 
@@ -78,12 +78,11 @@ class ClockViewDOM {
                 strVal='0'+strVal;
             return strVal;
     }
-
   }
 
   createDigitWatch(mainCircle, clockSize) {
     var digitWatch = document.createElement("div");
-    this.name.append(digitWatch);
+    this.myDiv.append(digitWatch);
     digitWatch.style.position = "absolute";
     digitWatch.style.height = clockSize / 8 + "px";
     digitWatch.style.width = clockSize / 4 + "px";
@@ -103,7 +102,7 @@ class ClockViewDOM {
 
   createMainCircle(circleSize) {
     var circle = document.createElement("div");
-    this.name.append(circle);
+    this.myDiv.append(circle);
     circle.style.position = "absolute";
     circle.style.borderRadius = "50%";
     circle.style.backgroundColor = "orange";
@@ -123,7 +122,7 @@ class ClockViewDOM {
       num.style.fontSize = clockSize / 2.5 + "%";
       numCircle.style.textAlign = "center";
       num.style.top = "20%";
-      this.name.append(numCircle);
+      this.myDiv.append(numCircle);
       numCircle.append(num);
       numCircle.style.border = "solid 2px violet";
       numCircle.style.borderRadius = "50%";
@@ -150,15 +149,15 @@ class ClockViewDOM {
 
   createClockHands(mainCircle, clockSize) {
     var hourHand = document.createElement("div");
-    this.name.append(hourHand);
+    this.myDiv.append(hourHand);
     hourHand.id = "hHand" + this.xId;
 
     var minuteHand = document.createElement("div");
-    this.name.append(minuteHand);
+    this.myDiv.append(minuteHand);
     minuteHand.id = "mHand" + this.xId;
 
     var secondHand = document.createElement("div");
-    this.name.append(secondHand);
+    this.myDiv.append(secondHand);
     secondHand.id = "sHand" + this.xId;
   }
 

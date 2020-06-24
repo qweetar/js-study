@@ -1,19 +1,20 @@
 "user strict"
 
 class ClockViewCanvas {
-  constructor(name, xId) {
+  constructor(myDiv, xId) {
     this.canvas = document.createElement("CANVAS");
-    this.name = name;
+    this.myDiv = myDiv;
     this.xId = xId;
-    this.size = name.offsetWidth;
-    this.name.append(this.canvas);
+    this.size = myDiv.offsetWidth;
+    this.myDiv.append(this.canvas);
     this.ctx = this.canvas.getContext("2d");
     this.canvas.width = this.size;
     this.canvas.height = this.size;
     this.radius = this.canvas.height / 2;
     this.ctx.translate(this.radius, this.radius);
-    this.radius = this.radius * 0.99;
+    this.radius = this.radius * 0.95;
     this.mainCircle = this.createMainCircle();
+    this.updateTime(new Date());
   }
 
   createMainCircle() {
@@ -96,15 +97,14 @@ class ClockViewCanvas {
     ctx.rotate(-pos);
   }
 
-  updateTime(gmt) {
+  updateTime(currTime) {
     var radiusCounter = 0;
     this.mainCircle = this.createMainCircle(this.ctx);
     this.createNumCircles(this.ctx, this.radius);
-    var currTime = new Date();
-    var hours = currTime.getHours() + gmt;
-    var time = str0l(hours, 2) + ":" + str0l(currTime.getMinutes(), 2) + ":" + str0l(currTime.getSeconds(), 2);
+    var currTime = new Date(currTime);
+    var time = str0l(currTime.getHours(), 2) + ":" + str0l(currTime.getMinutes(), 2) + ":" + str0l(currTime.getSeconds(), 2);
     this.createDigitWatch(this.ctx, this.radius, time);
-    this.moveHourHand(hours, currTime.getMinutes());
+    this.moveHourHand(currTime.getHours(), currTime.getMinutes());
     this.moveMinuteHand(currTime.getMinutes(), currTime.getSeconds());
     this.moveSecondHand(currTime.getSeconds());
 

@@ -1,17 +1,17 @@
 "user strict"
 
 class ClockViewSVG {
-  constructor(name, xId) {
+  constructor(myDiv, xId) {
     this.ns = "http://www.w3.org/2000/svg";
     this.svg = document.createElementNS(this.ns, "svg");
-    this.name = name;
+    this.myDiv = myDiv;
     this.xId = xId;
-    this.size = name.offsetWidth * 0.95;
+    this.size = myDiv.offsetWidth * 0.95;
     this.mainCircle = this.createClock(this.size);
-    this.name.append(this.svg);
+    this.myDiv.append(this.svg);
     this.svg.setAttributeNS(null, "width", this.size);
     this.svg.setAttributeNS(null, "height", this.size);
-
+    this.updateTime(new Date());
   }
 
   createClock(clockSize) {
@@ -81,12 +81,11 @@ class ClockViewSVG {
     this.svg.append(digitWatch);
   }
 
-  updateTime(gmt) {
-    var currTime = new Date();
-    var hours = currTime.getHours() + gmt;
-    var time = str0l(hours, 2) + ":" + str0l(currTime.getMinutes(), 2) + ":" + str0l(currTime.getSeconds(), 2);
+  updateTime(currTime) {
+    var currTime = new Date(currTime);
+    var time = str0l(currTime.getHours(), 2) + ":" + str0l(currTime.getMinutes(), 2) + ":" + str0l(currTime.getSeconds(), 2);
     document.getElementById("watch" + this.xId).innerHTML = time;
-    this.moveHourHand(hours, currTime.getMinutes());
+    this.moveHourHand(currTime.getHours(), currTime.getMinutes());
     this.moveMinuteHand(currTime.getMinutes(), currTime.getSeconds());
     this.moveSecondHand(currTime.getSeconds());
 
