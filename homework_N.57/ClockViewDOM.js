@@ -1,12 +1,12 @@
 "user strict"
 
 class ClockViewDOM {
-  constructor(myDiv, xId) {
+  constructor(myDiv, xId, currTime) {
     this.myDiv = myDiv;
     this.xId = xId;
     this.size = myDiv.offsetWidth * 0.95;
     this.mainCircle = this.createClock(this.size);
-    this.updateTime(new Date());
+    this.currTime = currTime;
   }
 
   createClock(clockSize) {

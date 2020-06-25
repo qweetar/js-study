@@ -22,6 +22,7 @@ class Clock {
 
   runClock(flag) {
     this.runFlag = flag;
+    this.updateTime();
     this.timerId  = setInterval(this.updateTime, 1000);
   }
 

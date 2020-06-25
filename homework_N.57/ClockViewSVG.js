@@ -11,7 +11,6 @@ class ClockViewSVG {
     this.myDiv.append(this.svg);
     this.svg.setAttributeNS(null, "width", this.size);
     this.svg.setAttributeNS(null, "height", this.size);
-    this.updateTime(new Date());
   }
 
   createClock(clockSize) {

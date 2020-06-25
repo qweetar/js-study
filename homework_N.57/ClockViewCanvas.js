@@ -14,7 +14,6 @@ class ClockViewCanvas {
     this.ctx.translate(this.radius, this.radius);
     this.radius = this.radius * 0.95;
     this.mainCircle = this.createMainCircle();
-    this.updateTime(new Date());
   }
 
   createMainCircle() {

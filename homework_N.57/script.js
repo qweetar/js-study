@@ -19,27 +19,27 @@ var controllerR2C1 = new ClockControllerButtons(clockR2C1id, clockR2C1);
 var gmtR1C2 = 0;
 var clockR1C2id = "r1-c2";
 var divR1C2 = document.getElementById(clockR1C2id);
-var clockViewDOMR1C2 = new ClockViewSVG(divR1C2, clockR1C2id);
-var clockR1C2 = new Clock(clockR1C2id, clockViewDOMR1C2, gmtR1C2);
+var clockViewSVGR1C2 = new ClockViewSVG(divR1C2, clockR1C2id);
+var clockR1C2 = new Clock(clockR1C2id, clockViewSVGR1C2, gmtR1C2);
 var controllerR1C2 = new ClockControllerButtons(clockR1C2id, clockR1C2);
 
 var gmtR2C2 = 8;
 var clockR2C2id = "r2-c2";
 var clockR2C2 = document.getElementById(clockR2C2id);
-var clockViewDOMR2C2 = new ClockViewSVG(clockR2C2, clockR2C2id);
-var clockR2C2 = new Clock(clockR2C2id, clockViewDOMR2C2, gmtR2C2);
+var clockViewSVGR2C2 = new ClockViewSVG(clockR2C2, clockR2C2id);
+var clockR2C2 = new Clock(clockR2C2id, clockViewSVGR2C2, gmtR2C2);
 var controllerR2C2 = new ClockControllerButtons(clockR2C2id, clockR2C2);
 
 var gmtR1C3 = 1;
 var clockR1C3id = "r1-c3";
 var divR1C3 = document.getElementById(clockR1C3id);
-var clockViewDOMR1C3 = new ClockViewCanvas(divR1C3, clockR1C3id);
-var clockR1C3 = new Clock(clockR1C3id, clockViewDOMR1C3, gmtR1C3);
+var clockViewCanvasR1C3 = new ClockViewCanvas(divR1C3, clockR1C3id);
+var clockR1C3 = new Clock(clockR1C3id, clockViewCanvasR1C3, gmtR1C3);
 var controllerR1C3 = new ClockControllerButtons(clockR1C3id, clockR1C3);
 
 var gmtR2C3 = 9;
 var clockR2C3id = "r2-c3";
 var clockR2C3 = document.getElementById(clockR2C3id);
-var clockViewDOMR2C3 = new ClockViewCanvas(clockR2C3, clockR2C3id);
-var clockR2C3 = new Clock(clockR2C3id, clockViewDOMR2C3, gmtR2C3);
+var clockViewCanvasR2C3 = new ClockViewCanvas(clockR2C3, clockR2C3id);
+var clockR2C3 = new Clock(clockR2C3id, clockViewCanvasR2C3, gmtR2C3);
 var controllerR2C3 = new ClockControllerButtons(clockR2C3id, clockR2C3);
