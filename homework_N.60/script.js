@@ -1,14 +1,18 @@
 
 "use strict";
 
-var form1;
-var form2;
+var info;
+var formFromServer;
 
-  readInfo();
+function renderForm1() {
+  readInfo("KUZMENOK_DYN_FORM1");
+  addHtml(formFromServer, "myForm1");
+}
 
-  // console.log(form1);
-  addHtml(form1, "myForm1");
-  addHtml(from2, "myForm2");
+function renderForm2() {
+  readInfo("KUZMENOK_DYN_FORM2");
+  addHtml(formFromServer, "myForm2");
+}
 
 function addHtml(form, formId) {
 
@@ -48,15 +52,11 @@ var htmlArray = form;
 
         var contElem=document.getElementById(formId);
         contElem.innerHTML=str;
-        console.log(contElem.innerHTML);
 }
 
-
 var ajaxHandlerScript = "https://fe.it-academy.by/AjaxStringStorage2.php";
-var updatePassword;
-var stringName = "KUZMENOK_DYN_FORM";
 
-function readInfo() {
+function readInfo(stringName) {
   $.ajax({
     url: ajaxHandlerScript, type: "POST", cache: false, dataType: "json",
     data: {f: "READ", n: stringName},
@@ -65,17 +65,13 @@ function readInfo() {
 }
 
 function readReady(callresult) {
-  console.log(callresult);
   if (callresult.error != undefined) {
     alert(callresult.error);
   } else if (callresult.result != "") {
     var newInfo = JSON.parse(callresult.result);
-    console.log(newInfo.form1);
-    form1 = newInfo.form1;
-    form2 = newInfo.form2;
+    formFromServer = newInfo.form;
   }
 }
-
 
 function errorHandler(jqXHR, statusStr, errorStr) {
   alert(statusStr + " " + errorStr);

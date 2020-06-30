@@ -4,12 +4,10 @@
 var info;
 
 info = form1;
+function store() {
 storeInfo();
 
-info = form2;
-storeInfo();
-
-
+}
 var form1=
 [
 {label:'Название сайта:',kind:'longtext',name:'sitename'},
@@ -35,7 +33,7 @@ var form2=
 
 var ajaxHandlerScript = "https://fe.it-academy.by/AjaxStringStorage2.php";
 var updatePassword;
-var stringName = "KUZMENOK_DYN_FORM";
+var stringName = "KUZMENOK_DYN_FORM2";
 
 function storeInfo() {
   updatePassword = Math.random();
@@ -51,8 +49,7 @@ function lockGetReady(callresult) {
     alert(callresult.error);
   } else {
     var newInfo = {
-      form1: form1,
-      form2: form2
+      form: form2
 
     }
 
