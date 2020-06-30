@@ -1,17 +1,12 @@
 
 "use strict";
 
-var info;
-var formFromServer;
+var formFromServer1;
+var formFromServer2;
 
-function renderForm1() {
+function renderForm() {
   readInfo("KUZMENOK_DYN_FORM1");
-  addHtml(formFromServer, "myForm1");
-}
-
-function renderForm2() {
   readInfo("KUZMENOK_DYN_FORM2");
-  addHtml(formFromServer, "myForm2");
 }
 
 function addHtml(form, formId) {
@@ -58,18 +53,27 @@ var ajaxHandlerScript = "https://fe.it-academy.by/AjaxStringStorage2.php";
 
 function readInfo(stringName) {
   $.ajax({
-    url: ajaxHandlerScript, type: "POST", cache: false, dataType: "json",
+    url: ajaxHandlerScript,
+    type: "POST",
+    cache: false,
+    dataType: "json",
     data: {f: "READ", n: stringName},
-    success: readReady, error: errorHandler
+    success: readReady,
+    error: errorHandler
   })
 }
 
 function readReady(callresult) {
+  var newInfo = JSON.parse(callresult.result);
+  console.log(callresult);
   if (callresult.error != undefined) {
     alert(callresult.error);
-  } else if (callresult.result != "") {
-    var newInfo = JSON.parse(callresult.result);
-    formFromServer = newInfo.form;
+  } else if ("form1" in newInfo) {
+    formFromServer1 = newInfo.form1;
+    addHtml(formFromServer1, "myForm1");
+  } else if ("form2" in newInfo) {
+    formFromServer2 = newInfo.form2;
+    addHtml(formFromServer2, "myForm2");
   }
 }
 

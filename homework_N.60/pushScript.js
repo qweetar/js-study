@@ -49,7 +49,7 @@ function lockGetReady(callresult) {
     alert(callresult.error);
   } else {
     var newInfo = {
-      form: form2
+      form2: form2
 
     }
 
