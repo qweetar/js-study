@@ -1,17 +1,17 @@
 "user strict"
 
-class AJAXStorageFunc {
+class AjaxHtmlStorageFunc {
   ajaxHandlerScript = "https://fe.it-academy.by/AjaxStringStorage2.php";
   updatePassword;
+  stringName = "KUZMENOK_ENCYCLO_";
 
-
-  constructor(name) {
-    this.stringName = name;
-    this.ajaxObj = {}
-    this.getAllData();
+  constructor() {
+    this.ajaxObj = {};
   }
 
-  updateValue(ajaxObj) {
+  updateValue(name, ajaxObj) {
+    this.stringName = "KUZMENOK_ENCYCLO_";
+    this.stringName += name;
     this.ajaxObj = ajaxObj;
     this.updatePassword = Math.random();
     $.ajax({
@@ -37,7 +37,9 @@ class AJAXStorageFunc {
     }
     lockGetReady = this.funcLockGetReady.bind(this);
 
-  getAllData() {
+  getAllData(name) {
+    this.stringName = "KUZMENOK_ENCYCLO_";
+    this.stringName += name;
     $.ajax({
       url: this.ajaxHandlerScript,
       type: "POST",
@@ -51,7 +53,8 @@ class AJAXStorageFunc {
 
   funcReadAllData(callresult) {
     if (callresult.result != "") {
-      this.ajaxObj = JSON.parse(callresult.result);
+      var poem = JSON.parse(callresult.result);
+      document.getElementById("curpoem").innerHTML = poem;
     }
   }
   readAllData = this.funcReadAllData.bind(this);
@@ -60,40 +63,9 @@ class AJAXStorageFunc {
       if (callresult.error != undefined) {
         alert(callresult.error);
       }
-      alert("good");
     }
 
     errorHandler(jqXHR, statusStr, errorStr) {
       alert(statusStr + " " + errorStr);
     }
-
-
-// test method for data riset
-  deleteAll() {
-    this.updatePassword = Math.random();
-    $.ajax({
-      url: this.ajaxHandlerScript,
-      type: "POST",
-      cache: false,
-      dataType: "json",
-      data: {f: "LOCKGET", n: this.stringName, p: this.updatePassword},
-      success: this.deleteAllReady,
-      error: this.errorHandler
-    })
-  }
-
-  funcDeleteAllReady(callresult) {
-    if (callresult.error != undefined) {
-      alert(callresult.error);
-    } else {
-      var ajaxObj = {};
-      }
-      $.ajax({
-        url: this.ajaxHandlerScript, type: "POST", cache: false, dataType: "json",
-        data: {f: "UPDATE", n: this.stringName, v: JSON.stringify(ajaxObj), p: this.updatePassword},
-        success: this.updateReady, error: this.errorHandler
-      })
-    }
-    deleteAllReady = this.funcDeleteAllReady.bind(this);
-
 }
